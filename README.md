@@ -2,7 +2,7 @@
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/) [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://) [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE) ![Task: Image Editing](https://img.shields.io/badge/Task-Image%20Editing-1E90FF) [![GitHub stars](https://img.shields.io/github/stars/hwanyu112/VIBE-Benchmark?style=social)](https://github.com/hwanyu112/VIBE-Benchmark/stargazers)  
 
-<font size=7><div align='center' > [[<img src="asset/icon.ico" width="80" style="vertical-align: bottom;">Project Page](https://vibe-benchmark.github.io/)] [[📖 arXiv Paper](https://arxiv.org/abs/2510.24514)] [[🤗 Dataset](https://huggingface.co/datasets/VIBE-Benchmark/VIBE-Benchmark)] [[🤗 Results](https://huggingface.co/collections/VIBE-Benchmark/vibe-model-results)]</div></font>
+<font size=7><div align='center' > [[🖥 Project Page](https://vibe-benchmark.github.io/)] [[📖 arXiv Paper](https://arxiv.org/abs/2510.24514)] [[🤗 Dataset](https://huggingface.co/datasets/VIBE-Benchmark/VIBE-Benchmark)] [[🤗 Results](https://huggingface.co/collections/VIBE-Benchmark/vibe-model-results)]</div></font>
 
 ## 📖 Overview
 <p align="center">
