@@ -1,6 +1,6 @@
 # *How Well Do Models Follow Visual Instructions?* VIBE: A Systematic Benchmark for Visual Instruction-Driven Image Editing
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/) [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://) [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE) ![Task: Image Editing](https://img.shields.io/badge/Task-Image%20Editing-1E90FF) [![GitHub stars](https://img.shields.io/github/stars/hwanyu112/VIBE-Benchmark?style=social)](https://github.com/hwanyu112/VIBE-Benchmark/stargazers)  
+[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/) [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://) [![License: CC BY-NC 3.0](https://img.shields.io/badge/License-CC%20BY--NC%203.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/3.0/) ![Task: Image Editing](https://img.shields.io/badge/Task-Image%20Editing-1E90FF) [![GitHub stars](https://img.shields.io/github/stars/hwanyu112/VIBE-Benchmark?style=social)](https://github.com/hwanyu112/VIBE-Benchmark/stargazers)  
 
 <font size=7><div align='center' > [[🖥 Project Page](https://vibe-benchmark.github.io/)] [[📖 arXiv Paper](https://arxiv.org/abs/2510.24514)] [[🤗 Dataset](https://huggingface.co/datasets/VIBE-Benchmark/VIBE-Benchmark)] [[🤗 Results](https://huggingface.co/collections/VIBE-Benchmark/vibe-model-results)]</div></font>
 
