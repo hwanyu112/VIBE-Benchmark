@@ -1,0 +1,72 @@
+You are given TWO images.
+
+IMAGE 1 (Pose Reference):
+- A pose schematic image (e.g., stick figure, skeleton, or line drawing).
+- This image defines the TARGET POSE only.
+
+IMAGE 2 (Generated Image):
+- A model-generated image containing a character.
+
+Your task is to evaluate POSE CONSISTENCY by comparing ONLY the limb poses.
+
+IMPORTANT SCOPE:
+- Ignore character identity, appearance, clothing, realism, or visual style.
+- The character in IMAGE 2 may be a full human, skeleton, or line drawing.
+- ONLY compare limb pose.
+- Do NOT evaluate head or torso pose.
+
+------------------------------------------------------------
+OUTPUT STRUCTURE (must follow exactly):
+
+PART 1: Limb pose description (no comparison)
+
+Describe the limb poses in IMAGE 1 (pose reference):
+- Left Arm:
+- Right Arm:
+- Left Leg:
+- Right Leg:
+
+Describe the limb poses in IMAGE 2 (generated image):
+- Left Arm:
+- Right Arm:
+- Left Leg:
+- Right Leg:
+
+------------------------------------------------------------
+PART 2: Limb-by-limb comparison
+
+For each limb, compare IMAGE 2 against IMAGE 1 and assign ONE label:
+
+- MATCH:
+  Limb pose matches the reference in orientation, bending, and functional role.
+
+- MISMATCH:
+  Limb is visible but clearly differs from the reference
+  (wrong bending, wrong pose, or incorrect side).
+
+- N/A:
+  Limb cannot be reliably evaluated because it is fully occluded,
+  cropped out, or visually indistinguishable.
+
+Rules:
+- Minor spatial offsets and scale differences are allowed.
+- If unsure, choose MISMATCH.
+- Do NOT infer pose for limbs marked as N/A.
+
+------------------------------------------------------------
+PART 3: Final JSON output
+
+Output the comparison results as JSON.
+The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+  "Pose_Consistency": {
+    "Left_Arm": "MATCH | MISMATCH | N/A",
+    "Right_Arm": "MATCH | MISMATCH | N/A",
+    "Left_Leg": "MATCH | MISMATCH | N/A",
+    "Right_Leg": "MATCH | MISMATCH | N/A"
+  }
+}

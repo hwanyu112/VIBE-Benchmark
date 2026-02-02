@@ -1,0 +1,97 @@
+You are given TWO images.
+
+IMAGE 1 (Input Image):
+- The original image before wind editing.
+- This image may contain visual instruction markings
+  (e.g., arrows) indicating wind direction.
+
+IMAGE 2 (Generated Image):
+- The model-generated image after wind editing.
+
+Your task is to evaluate Wind Contextual Preservation (W-CP),
+which consists of TWO sub-metrics:
+1) Wind-Identity Preservation (W-IP)
+2) Wind-Pose/Placement Preservation (W-PP)
+
+IMPORTANT GLOBAL RULES:
+- Visual instruction markings (e.g., arrows) are NOT scene content.
+  Differences related to arrows MUST be ignored,
+  unless they severely obstruct the subject or degrade visual quality.
+- Wind effects are assumed to be intentional and allowed.
+- Do NOT penalize changes directly caused by wind.
+
+------------------------------------------------------------
+SUB-METRIC 1: Wind-Identity Preservation (W-IP)
+
+W-IP checks whether the wind-affected subject(s)
+remain the SAME semantic entity after editing.
+
+Focus on identity ONLY:
+- Person identity (same person, same character)
+- Object identity (same candle, same dandelion, same clothing item)
+
+Explicitly IGNORE:
+- Deformation, bending, or scattering caused by wind
+  (e.g., flying hair, dispersed seeds, flickering flame).
+
+Scoring:
+- Score = 1  
+  If the identity of all wind-affected subjects is preserved.
+
+- Score = 0  
+  If any subject is removed, replaced, duplicated,
+  or transformed into a different semantic entity.
+
+------------------------------------------------------------
+SUB-METRIC 2: Wind-Pose / Placement Preservation (W-PP)
+
+IMPORTANT:
+- Evaluate W-PP ONLY IF W-IP = 1.
+- If W-IP = 0, set W-PP = 0 by default.
+
+W-PP checks whether the overall position and pose of the subject(s)
+remain consistent with IMAGE 1, AFTER ignoring wind-induced effects.
+
+Ignore the following wind-induced changes:
+- Hair blowing direction or shape.
+- Cloth fluttering or bending.
+- Dispersal or motion of lightweight elements
+  (e.g., dandelion seeds, smoke, flame shape).
+
+Check ONLY:
+- Whether the subject’s main body has shifted position.
+- Whether the subject’s global orientation or stance has changed.
+
+Scoring:
+- Score = 1  
+  If the subject’s overall position and pose are preserved.
+
+- Score = 0  
+  If the subject has been significantly moved, rotated,
+  or reposed beyond what wind could plausibly cause.
+
+------------------------------------------------------------
+Output Requirements:
+
+1) First provide your reasoning under:
+   - ## Identity Preservation Analysis
+   - ## Pose / Placement Analysis
+
+2) Then output the final JSON under:
+   - ## JSON
+
+3) The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+  "Wind-Identity_Preservation": {
+      "reason": "string",
+      "score": 0
+  },
+  "Wind-Other_Preservation": {
+      "reason": "string",
+      "score": 0
+  }
+}

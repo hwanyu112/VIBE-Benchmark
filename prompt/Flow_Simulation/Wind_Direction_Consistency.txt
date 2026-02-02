@@ -1,0 +1,95 @@
+You are given TWO images.
+
+IMAGE 1 (Input Image):
+- The original image.
+- A visual arrow is drawn on this image indicating the desired wind direction.
+- The arrow defines the TARGET wind flow direction.
+
+IMAGE 2 (Generated Image):
+- The model-generated image after wind editing.
+
+Your task is to evaluate Wind Direction Consistency (WDC).
+
+IMPORTANT SCOPE:
+- Evaluate ONLY the wind direction.
+- Do NOT evaluate physical realism, wind strength, or scene preservation.
+- Ignore all non-wind-related changes.
+
+------------------------------------------------------------
+CRITICAL CAUSAL RULE (MUST FOLLOW):
+
+Wind direction is considered valid ONLY IF it produces
+visible, directionally consistent effects on at least one
+wind-sensitive element in the scene.
+
+Wind-sensitive elements include (but are not limited to):
+- Hair
+- Clothing or fabric
+- Vegetation (e.g., trees, grass, dandelions)
+- Smoke, mist, particles
+- Flame shape (e.g., candles)
+
+If wind is shown only as abstract airflow (e.g., lines or particles)
+WITHOUT affecting any wind-sensitive element,
+the wind direction MUST be scored as 0.
+
+------------------------------------------------------------
+PART 1: Direction description (no comparison)
+
+(1) Arrow direction in IMAGE 1:
+Describe the arrow direction as a continuous spatial direction.
+Do NOT reduce it to simple categories (left/right/up/down).
+Use precise descriptions (e.g., "from upper-left toward lower-right").
+
+(2) Wind direction in IMAGE 2:
+Infer the dominant wind direction based ONLY on visible wind effects,
+such as hair, clothing, vegetation, smoke, or particles.
+Describe the wind direction using the same level of precision as above.
+
+------------------------------------------------------------
+PART 2: Direction comparison and scoring
+
+Compare the arrow direction and the inferred wind direction.
+
+Scoring:
+- Score = 1.0  
+  ONLY if:
+  (a) At least one wind-sensitive element clearly responds to wind, AND
+  (b) The response direction closely matches the arrow direction.
+
+- Score = 0.5  
+  ONLY if:
+  (a) Wind-sensitive elements respond to wind, AND
+  (b) The response direction generally follows the arrow,
+      but with a noticeable angular deviation (within ~30 degrees).
+
+- Score = 0.0  
+  In ALL other cases, including:
+  - No wind-sensitive elements respond to wind.
+  - Wind is shown only via abstract airflow cues.
+  - Wind direction is unchanged, opposite, or ambiguous.
+  - Wind-sensitive elements exist but do not move consistently
+    with the arrow direction.
+
+------------------------------------------------------------
+Output Requirements:
+
+1) First provide your reasoning under:
+   - ## Causal Wind Evidence
+   - ## Direction Description
+   - ## Direction Comparison
+
+2) Then output the final JSON under:
+   - ## JSON
+
+3) The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+  "Wind_Direction_Consistency": {
+    "reason": "string (one-sentence summary)",
+    "score": 0.0
+  }
+}

@@ -1,0 +1,142 @@
+You are given **TWO images**.
+
+## IMAGE 1 (Input Image)
+- The original image.
+- A **FOUR-SIDED PYRAMID orientation indicator** is shown at the **BOTTOM-LEFT** corner.
+- The pyramid defines the **TARGET orientation**:
+  - The pyramid’s **tip** indicates the FORWARD direction.
+  - The pyramid implicitly defines **Yaw, Pitch, and Roll**.
+
+## IMAGE 2 (Generated Image)
+- The model-generated image after orientation editing.
+
+Your task is to evaluate whether the **FINAL orientation in IMAGE 2**
+matches the **TARGET orientation defined by the pyramid in IMAGE 1**.
+
+---
+
+## STEP 1: Identify target object and orientation anchor
+
+Identify the main target object whose orientation is edited.
+
+Then determine its **Orientation Anchor** — the semantic part that defines
+the object’s forward-facing direction.
+
+Use these rules:
+- Shoes → toe
+- Chairs → backrest
+- Cars → front / headlights
+- Cameras → lens
+- Humans → face
+- Animals → head
+- Tools / devices → functional front end
+
+State explicitly:
+- **Target object**
+- **Orientation anchor**
+
+---
+
+## STEP 2: Describe TARGET orientation (IMAGE 1 ONLY)
+
+Look **ONLY at IMAGE 1**.
+
+Describe the pyramid’s orientation using **three independent axes**:
+
+- **Yaw**: horizontal facing direction of the pyramid’s tip  
+- **Pitch**: upward or downward tilt of the pyramid’s tip  
+- **Roll**: leftward or rightward tilt of the pyramid body  
+
+Rules:
+- Do NOT reference the object.
+- Do NOT compare with IMAGE 2.
+- Do NOT use vague terms.
+- Use explicit spatial descriptions.
+
+---
+
+## STEP 3: Describe FINAL object orientation (IMAGE 2 ONLY)
+
+Look **ONLY at IMAGE 2**.
+
+Using the **orientation anchor**, describe the FINAL orientation
+of the object in IMAGE 2:
+
+- **Yaw**
+- **Pitch**
+- **Roll**
+
+Rules:
+- Describe the actual observed orientation, not intent.
+- Do NOT reference IMAGE 1 or the pyramid.
+- Do NOT infer past states.
+- Do NOT merge axes.
+- If an axis cannot be determined, mark it as **N/A**.
+
+---
+
+## STEP 4: Axis-wise alignment (comparison)
+
+Now compare the descriptions from **STEP 2** and **STEP 3**.
+
+For EACH axis:
+
+- **Score = 1**  
+  if the FINAL object orientation matches the TARGET pyramid orientation.
+
+- **Score = 0**  
+  otherwise.
+
+IMPORTANT:
+- Scoring is based **ONLY on final alignment**.
+- Do NOT use any information about whether modification was needed.
+
+---
+
+## STEP 5: Needs_Modification analysis (IMAGE 1 ONLY — report only)
+
+Look **ONLY at IMAGE 1** again.
+
+For each axis, decide whether the object’s ORIGINAL orientation
+matched the pyramid’s TARGET orientation:
+
+- **Needs_Modification = YES**
+- **Needs_Modification = NO**
+
+Rules:
+- This step is **for reporting only**.
+- It MUST NOT affect the score.
+- Do NOT reference IMAGE 2.
+- Do NOT infer from the final result.
+
+---
+
+## OUTPUT FORMAT
+
+First provide reasoning under the following sections:
+
+- `## Object & Anchor`
+- `## Target Orientation (IMAGE 1)`
+- `## Final Orientation (IMAGE 2)`
+- `## Axis-wise Alignment`
+- `## Needs Modification (Report Only)`
+
+Then output the final result as **JSON (LAST PART ONLY)**:
+
+```json
+{
+  "Yaw": {
+    "needs_modification": true,
+    "reason": "string",
+    "score": 0
+  },
+  "Pitch": {
+    "needs_modification": false,
+    "reason": "string",
+    "score": 0
+  },
+  "Roll": {
+    "needs_modification": true,
+    "reason": "string",
+    "score": 0
+  }

@@ -1,0 +1,110 @@
+You are given **TWO images**.
+
+## IMAGE 1 (Input Image)
+- The original image before editing.
+
+## IMAGE 2 (Generated Image)
+- The model-generated image after orientation editing.
+
+Your task is to evaluate **TWO independent metrics**:
+
+1. **Identity Consistency (IC)**  
+2. **Visual Integrity (VI)**  
+
+These two metrics MUST be evaluated **separately** and **independently**.
+
+---
+
+## PART 1: Identity Consistency (IC)
+
+Identity Consistency evaluates whether the **edited subject in IMAGE 2**
+remains the **same semantic object/entity** as in IMAGE 1,
+ignoring changes that are directly caused by orientation editing.
+
+### STEP 1: Identify the edited subject
+
+- Look at **IMAGE 1** and identify the main subject intended to be edited.
+- Look at **IMAGE 2** and identify the corresponding subject.
+
+### STEP 2: Identity consistency check
+
+Decide whether the subject in IMAGE 2 is the **same identity** as in IMAGE 1.
+
+You MUST ignore:
+- Orientation or facing-direction changes.
+- Pose changes caused by reorientation.
+- Perspective changes due to rotation.
+- Lighting, shading, or color changes.
+- Minor texture or detail variations.
+
+You MUST penalize:
+- Object replacement (e.g., shoe → different shoe type or different object).
+- Object removal or duplication.
+- Structural corruption (missing parts, extra parts, broken anatomy).
+- Conversion into a fundamentally different semantic entity.
+
+### IC Scoring (binary):
+- **Score = 1**  
+  if the subject identity and overall structure are clearly preserved.
+
+- **Score = 0**  
+  if the subject is replaced, missing, duplicated, or structurally corrupted.
+
+If unsure, score **0**.
+
+---
+
+## PART 2: Visual Integrity (VI)
+
+Visual Integrity evaluates whether the editing process introduced
+**severe visual artifacts or layout corruption**
+that significantly degrade image quality.
+
+### STEP 3: Visual corruption inspection
+
+Compare **IMAGE 2** against **IMAGE 1** and check for severe issues such as:
+
+- Prominent UI or indicator pollution  
+  (e.g., orientation pyramid or markers appearing in the image center).
+- Large unnatural visual artifacts or rendering glitches.
+- Structural image collapse  
+  (e.g., extreme distortion, tearing, duplicated geometry).
+- Occlusions or obstructions that severely harm image readability.
+
+You MUST ignore:
+- Orientation changes of the edited subject.
+- Normal perspective changes caused by rotation.
+- Lighting or color changes.
+- Minor artifacts that do not significantly affect readability.
+
+### VI Scoring (binary):
+- **Score = 1**  
+  if IMAGE 2 remains visually coherent and readable,
+  with no severe artifacts or layout corruption.
+
+- **Score = 0**  
+  if IMAGE 2 exhibits clear visual breakdown or UI pollution.
+
+If unsure, score **0**.
+
+---
+
+## OUTPUT FORMAT
+
+First provide your reasoning under:
+- `## Identity Consistency Analysis`
+- `## Visual Integrity Analysis`
+
+Then output the final result as **JSON (LAST PART ONLY)**:
+
+```json
+{
+  "Identity_Consistency": {
+    "reason": "string (one-sentence summary)",
+    "score": 0
+  },
+  "Visual_Integrity": {
+    "reason": "string (one-sentence summary)",
+    "score": 0
+  }
+}

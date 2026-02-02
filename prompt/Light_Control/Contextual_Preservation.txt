@@ -1,0 +1,97 @@
+You are given TWO images.
+
+IMAGE 1 (Input Image):
+- The original image before editing.
+
+IMAGE 2 (Generated Image):
+- The model-generated image after lighting editing.
+
+Your task is to evaluate Contextual Preservation (CP).
+
+CP checks whether IMAGE 2 preserves all non-target content
+from IMAGE 1 while applying the intended lighting-direction edit.
+
+IMPORTANT SCOPE:
+- This evaluation is NOT about lighting direction correctness.
+- Assume lighting direction editing is the intended and allowed operation.
+- CP ONLY checks whether unrelated scene content has been modified.
+
+— Visual Instruction Rule:
+- Visual instruction markings in IMAGE 1 (e.g., arrows or guides)
+  are NOT part of the scene content.
+- Differences related to the presence, absence, or appearance
+  of these instruction markings in IMAGE 2 MUST be IGNORED,
+  UNLESS they severely obstruct the subject or significantly
+  degrade the visual quality of the image.
+
+------------------------------------------------------------
+PART 1: Allowed vs non-allowed changes
+
+Allowed changes (do NOT penalize):
+- Changes in illumination intensity, shading, or highlights.
+- Changes in shadow shape or placement caused by lighting.
+- Minor color shifts attributable to lighting.
+- Appearance of visible light sources or light-related effects
+  introduced solely to express lighting, such as:
+  • bright light spots,
+  • visible lamps,
+  • sun glare,
+  • lens flare,
+  • light beams or glow effects,
+  as long as they do not alter scene geometry or object structure.
+
+Non-allowed changes (must be penalized):
+- Addition or removal of non-lighting objects.
+- Changes in object geometry or structure.
+- Changes in scene layout or spatial arrangement.
+- Replacement of materials, textures, or clothing.
+- Introduction of new semantic scene elements
+  unrelated to lighting (e.g., new furniture, new buildings).
+- Differences involving visual instruction markings
+  (e.g., arrows) that do not affect scene content.
+
+------------------------------------------------------------
+PART 2: Difference-based comparison
+
+Compare IMAGE 1 and IMAGE 2 carefully.
+
+Procedure:
+1) List all observable differences between IMAGE 1 and IMAGE 2.
+2) For each difference, determine whether it is:
+   - a lighting-related manifestation (allowed), OR
+   - an unrelated content modification (not allowed).
+
+------------------------------------------------------------
+PART 3: Contextual Preservation decision
+
+Scoring (binary):
+- Score = 1  
+  ONLY if ALL observed differences fall under allowed lighting-related changes.
+
+- Score = 0  
+  If ANY difference corresponds to an unrelated content modification.
+
+If unsure whether a difference is lighting-related or not,
+treat it as NOT preserved (score 0).
+
+------------------------------------------------------------
+Output Requirements:
+
+1) First provide your reasoning under:
+   - ## Difference Analysis
+   - ## CP Decision
+
+2) Then output the final JSON under:
+   - ## JSON
+
+3) The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+  "Contextual_Preservation": {
+    "reason": "string (one-sentence summary)",
+    "score": 0
+  }
+}

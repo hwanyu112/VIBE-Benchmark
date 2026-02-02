@@ -1,0 +1,97 @@
+You are given TWO images.
+
+IMAGE 1 (Input Image):
+- The original image.
+- A visual arrow indicates the desired lighting direction.
+- The arrow defines the TARGET light propagation direction
+  (from the light source toward the subject).
+
+IMAGE 2 (Generated Image):
+- The model-generated image after lighting editing.
+
+Your task is to evaluate Lighting Direction Consistency (LDC),
+which consists of TWO sub-metrics:
+1) Direction Matching Consistency (DMC)
+2) Physical Lighting Consistency (PLC)
+
+------------------------------------------------------------
+PART 1: Direction description (no comparison)
+
+(1) Arrow direction in IMAGE 1:
+Describe the arrow direction as a continuous spatial direction.
+Use precise language (e.g., "from upper-right toward lower-left",
+"slightly downward from right to left").
+Do NOT reduce the direction to simple categories like left/right/up/down.
+
+(2) Lighting direction on the subject in IMAGE 2:
+Describe the dominant lighting direction ON THE SUBJECT,
+inferred ONLY from surface illumination (highlights and shadows),
+not from light source position or visible beams.
+Use the same level of directional precision as above.
+
+------------------------------------------------------------
+PART 2: Direction Matching Consistency (DMC)
+
+Compare the two described directions.
+
+Scoring:
+- Score = 1.0  
+  If the directions are nearly identical with no clear angular deviation.
+
+- Score = 0.5  
+  If the lighting direction is clearly modified to follow the arrow,
+  but exhibits a noticeable angular deviation (within ~90 degrees).
+
+- Score = 0.0  
+  If the lighting direction is largely different, unchanged, or ambiguous.
+
+------------------------------------------------------------
+PART 3: Physical Lighting Consistency (PLC)
+
+IMPORTANT:
+- Only evaluate PLC IF DMC = 1.0.
+- If DMC < 1.0, set PLC = 0 by default.
+
+Assume the arrow direction is the TRUE light source direction.
+Check whether the lighting effects on the subject in IMAGE 2
+are physically consistent with that direction.
+
+Consider:
+- Which side of the subject should be illuminated.
+- Which side should be in shadow.
+- Whether highlights and shading agree with the arrow direction.
+
+Scoring:
+- Score = 1  
+  If the observed illumination pattern on the subject
+  is physically consistent with the arrow direction.
+
+- Score = 0  
+  If the illumination pattern contradicts the arrow direction.
+
+------------------------------------------------------------
+Output Requirements:
+
+1) First provide your reasoning under:
+   - ## Direction Description
+   - ## Direction Comparison
+   - ## Physical Consistency
+
+2) Then output the final JSON under:
+   - ## JSON
+
+3) The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+    "Direction_Matching_Consistency": {
+      "reason": "string",
+      "score": 0.0
+    },
+    "Physical_Lighting_Consistency": {
+      "reason": "string",
+      "score": 0
+    }
+}

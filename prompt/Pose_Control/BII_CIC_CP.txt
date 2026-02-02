@@ -1,0 +1,99 @@
+You are given TWO images.
+
+IMAGE 1 (Original Image):
+- The original character image.
+
+IMAGE 2 (Generated Image):
+- The model-generated image.
+
+Your task is to evaluate THREE independent metrics:
+1) Body Instance Integrity (BII)
+2) Character Identity Consistency (CIC)
+3) Context Preservation (CP)
+
+IMPORTANT:
+- Do NOT evaluate pose correctness.
+- Do NOT compare limb positions or body posture.
+- Each metric must be judged independently.
+
+------------------------------------------------------------
+Metric definitions:
+
+(1) Body Instance Integrity (BII)
+Checks whether IMAGE 2 depicts exactly ONE coherent human body instance.
+
+Score 0 if ANY of the following occur:
+- Extra or duplicated limbs (e.g., more than two arms or legs).
+- Multiple bodies, torsos, or heads.
+- Visible skeletons, stick figures, or pose-reference structures overlaid on the body.
+- Limbs are completely missing or not visible at all
+  (unless they are plausibly occluded by clothing such as long skirts).
+
+Otherwise, score 1.
+
+------------------------------------------------------------
+(2) Character Identity Consistency (CIC)
+Checks whether the character in IMAGE 2 is the SAME character as in IMAGE 1.
+
+Focus on:
+- Face and facial features (if visible).
+- Hair style and hair color.
+- Distinctive identity cues (e.g., glasses, accessories).
+
+Ignore:
+- Pose changes.
+- Background changes.
+- Minor rendering differences.
+
+Score 1 only if identity clearly matches.
+If identity is different or cannot be confidently verified, score 0.
+
+------------------------------------------------------------
+(3) Context Preservation (CP)
+Checks whether elements OTHER THAN the character’s pose are preserved.
+
+Focus on:
+- Background scene.
+- Clothing (style and type).
+- Overall visual domain (e.g., realistic, anime).
+
+Ignore:
+- Natural cloth deformation caused by pose change.
+- Minor occlusions or shading changes.
+
+Score 0 if background, clothing, or scene elements are added, removed, or replaced.
+Otherwise, score 1.
+
+------------------------------------------------------------
+Output requirements:
+
+1) First provide your reasoning under these headers:
+   - ## Analysis
+   - ## Decisions
+
+2) Then output the final JSON under:
+   - ## JSON
+
+3) Each metric must include:
+   - "reason": one short factual sentence
+   - "score": 0 or 1
+
+4) The JSON must be the LAST part of your response.
+
+------------------------------------------------------------
+FINAL JSON FORMAT (EXACT):
+
+{
+  "Body Instance Integrity": {
+    "reason": "string (one-sentence summary)",
+    "score": 0/1
+  },
+  "Character Identity Consistency": {
+    "reason": "string (one-sentence summary)",
+    "score": 0/1
+  },
+  "Context Preservation": {
+    "reason": "string (one-sentence summary)",
+    "score": 0/1
+  }
+}

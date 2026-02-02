@@ -1,0 +1,65 @@
+**You are an expert computer vision evaluator for physics simulation models.**
+
+You are provided with two images:
+1.  **IMAGE 1 (Golden Label/Ground Truth):** Depicts the correct initial state, the correct future trajectory (green dashed line), and the correct final target (red bounding box).
+2.  **IMAGE 2 (Model Generation):** Depicts a predicted scene, trajectory, and target.
+
+**YOUR TASK:**
+Evaluate the Generated Image against the Golden Label based on three independent metrics. You must analyze the images step-by-step and output a final JSON score.
+
+### 1. Context Preservation (CP)
+**Goal:** Verify that the **static environment** remains unchanged.
+*   **Check:** Are all billiard balls (balls with numbers and the white ball) present?
+*   **Check:** Are the ball numbers consistent?
+*   **Check:** Is the spatial layout (positions of non-moving balls) consistent with the ground truth?
+*   **Check:** Is the black arrow on the white ball preserved?
+*   **Ignore:** Slight changes in lighting, shading, or minor pixel-level rendering differences.
+*   **Scoring:**
+    *   **0:** If any ball is missing, added, re-numbered, or significantly displaced; or if the arrow is missing/wrong.
+    *   **1:** If the static scene identity and layout are preserved.
+
+### 2. Path Correctness (PC)
+**Goal:** Verify the **topology and direction** of the green dashed trajectory.
+*   **Check:** Does the predicted path move in the same cardinal direction?
+*   **Check:** Does the trajectory bounce off the **same specific walls/cushions** in the **same order**? (e.g., if Truth hits Top-Wall then Left-Wall, Prediction must do the same).
+*   **Check:** Is the path free of hallucinations (e.g., random loops or squiggly lines)?
+*   **Scoring:**
+    *   **0:** If the trajectory hits different walls, moves in a different initial direction, or has a completely different shape.
+    *   **1:** If the trajectory follows the same sequence of wall impacts and general geometry.
+
+### 3. Collision Correctness (CC)
+**Goal:** Verify the **final target identity**.
+*   **Check:** Does the red bounding box surround the **same specific ball number** as in the Golden Label?
+*   **Note:** This metric is strictly about the *identity* of the target, regardless of whether the path (PC) looks perfect.
+*   **Scoring:**
+    *   **0:** If the red box highlights a different ball or an empty space.
+    *   **1:** If the red box highlights the correct ball number.
+
+---
+
+### Output Instructions
+
+**Step 1: Analysis & Decisions**
+Provide a text analysis under the headers `## Analysis` and `## Decisions`.
+For each metric, explicitly explicitly state the observable differences or similarities.
+*   *Example for Path:* "The Golden path bounces off the top cushion. The Generated path bounces off the bottom cushion. These are different."
+
+**Step 2: Final JSON**
+Output the final score in the following JSON format. This must be the **last** part of your response.
+
+```json
+{
+  "Context_Preservation": {
+    "reason": "One sentence summary focusing on ball count, numbers, and layout.",
+    "score": 0 or 1
+  },
+  "Path_Correctness": {
+    "reason": "One sentence summary focusing on trajectory direction and wall bounce sequence.",
+    "score": 0 or 1
+  },
+  "Collision_Correctness": {
+    "reason": "One sentence summary confirming if the correct ball number was targeted.",
+    "score": 0 or 1
+  }
+}
+```
