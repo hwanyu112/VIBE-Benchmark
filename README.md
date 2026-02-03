@@ -168,7 +168,7 @@ The script will:
 If you find VIBE useful in your research, please consider citing:
 
 ```bibtex
-@misc{{zhang2026vibe-benchmark,
+@misc{zhang2026vibe-benchmark,
   title={How Well Do Models Follow Visual Instructions? VIBE: A Systematic Benchmark for Visual Instruction-Driven Image Editing}, 
       author={Huanyu Zhang and Xuehai Bai and Chengzu Li and Chen Liang and Haochen Tian and Haodong Li and Ruichuan An and Yifan Zhang and Anna Korhonen and Zhang Zhang and Liang Wang and Tieniu Tan},
       year={2026},
